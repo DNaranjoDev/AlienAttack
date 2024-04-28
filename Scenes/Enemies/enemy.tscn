@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://dayqk7urtfa8a"]
+
+[ext_resource type="Script" path="res://Scripts/Enemy/Enemy.gd" id="1_hd01l"]
+[ext_resource type="Texture2D" uid="uid://dfae0kqcb4gkc" path="res://Assets/textures/enemy_ship.png" id="2_t7wud"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_t6gk8"]
+radius = 230.0
+height = 540.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_w8o8r"]
+radius = 120.0
+height = 500.0
+
+[node name="Enemy" type="Area2D"]
+rotation = 4.71239
+scale = Vector2(0.2, 0.2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("1_hd01l")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_t7wud")
+
+[node name="Hurbox" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_t6gk8")
+
+[node name="VisibleNotifier" type="VisibleOnScreenNotifier2D" parent="."]
+
+[node name="Hitbox" type="Area2D" parent="."]
+
+[node name="HitboxCollision" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CapsuleShape2D_w8o8r")
+debug_color = Color(0.937255, 0.219608, 0.290196, 0.419608)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="screen_exited" from="VisibleNotifier" to="." method="_on_visible_notifier_screen_exited"]
